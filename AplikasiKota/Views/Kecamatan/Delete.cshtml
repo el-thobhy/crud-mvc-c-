@@ -1,0 +1,40 @@
+﻿@using AplikasiKota.Web.ViewModel
+@model KecamatanViewModel
+
+@{
+    ViewData["Title"] = "Delete Kecamatan";
+}
+
+<div class="card">
+    <div class="card-body">
+        <form asp-action="SoftDelete" method="post" id="form_delete">
+
+            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+            <h3>Are you sure to delete @Model.NamaKecamatan ?</h3>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Yes</button>
+                <a asp-controller="Kecamatan" asp-action="Index" class="btn btn-light">No</a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+    $("#form_delete").submit({
+        var id = $("#Id").val()
+
+        $.ajax({
+            url: '/Kecamatan/SoftDelete',
+            type: "post",
+            data: { id: id },
+            dataType: "json",
+            success: function (respon) {
+
+            }
+        })
+    })
+</script>

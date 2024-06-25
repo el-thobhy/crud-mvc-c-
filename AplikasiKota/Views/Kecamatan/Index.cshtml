@@ -1,0 +1,92 @@
+﻿@using AplikasiKota.Web.ViewModel
+@model List<KecamatanViewModel>
+@{
+    ViewData["Title"] = "Kecamatan";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="mb-3">
+            <h1 class="card-title">@ViewData["Title"]</h1>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <button id="btn_create_kecamatan" class="btn btn-primary" data-bs-toggle="modal" , data-bs-target="#staticBackdrop">Create</button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover mb-3">
+            <thead>
+                <tr>
+                    <th>Id kota</th>
+                    <th>Nama Kecamatan</th>
+                    <th>Kode Kecamatan</th>
+                    <th>Nama Kota</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count != 0)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.NamaKecamatan</td>
+                            <td>@item.KodeKecamatan</td>
+                            <td>@item.Kota.NamaKota</td>
+                            <td>
+                                <a class="btn btn-primary btn_edit text-white" id="btn_edit" dataid="@item.Id">Edit</a>
+                                <a class="btn btn-danger btn_delete text-white" id="btn_delete" dataid="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            Data Not Foound!
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-between">
+                    <button id="btn_print" class="btn btn-primary" >Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btn_create_kecamatan").click(function () {
+        $("#staticBackdropBody").load("/Kecamatan/Create");
+    });
+
+    $(".btn_edit").click(function () {
+        var id = $(this).attr("dataid")
+        $("#staticBackdropBody").empty()
+
+        $("#staticBackdropBody").load("/Kecamatan/Edit?id=" + id)
+        $("#staticBackdrop").modal("show")
+    });
+
+    $(".btn_delete").click(function () {
+        var id = $(this).attr("dataid")
+
+        $("#staticBackdropBody").empty()
+        $("#staticBackdropBody").load("/Kecamatan/Delete?id=" + id)
+        $("#staticBackdrop").modal("show")
+    });
+
+    $("#btn_print").click(function () {
+        window.print();
+    });
+
+</script>
